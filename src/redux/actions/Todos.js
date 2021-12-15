@@ -1,85 +1,66 @@
-// import { FETCH_ALL_TODOS, FETCH_DETAIL_TODOS } from './types'
-import { ADD_TODO, DONE_TODO, UNDONE_TODO, DELETE_TODO } from './types'
-// import axios from 'axios'
-// import { useDispatch } from "react-redux";
+import { FETCH_ALL_TODOS } from './types'
+import { POST_TODO, DONE_TODO, UNDONE_TODO, DELETE_TODO } from './types'
+import axios from 'axios'
 import store from 'redux/store'
-// const dispatch = useDispatch();
 
-export const fetchAllMovies = (page, search) => dispatch => {
-    // if (page && search) {
-    //     axios.get(`http://www.omdbapi.com/?apikey=faf7e5bb&s=${search}&page=${page}`)
-    //     .then(data => {
-    //         dispatch ({
-    //             type: FETCH_ALL_TODOS,
-    //             payload: data.data
-    //         })
-            
-    //     })
-    //     .catch(error => console.log('cek error:', error))
-    //     return
-    // }
-
-    // axios.get(`http://www.omdbapi.com/?apikey=faf7e5bb&s=abc&type=movie&plot=full&page=${page}`)
-    // .then(data => {
-    //     dispatch ({
-    //         type: FETCH_ALL_TODOS,
-    //         payload: data.data
-    //     })
-    // })
-    // .catch(error => console.log('cek error:', error))
+export const fetchAllTodo = ()  => {
+    axios.get('https://gorest.co.in/public/v1/todos')
+    .then(res => {
+        const dataFiltered = res.data.data.map((item) => ({
+            ...item,
+            description: 'Empty description'
+        }))
+        store.dispatch ({
+            type: FETCH_ALL_TODOS,
+            payload: dataFiltered
+        })            
+    })
+    .catch(error => {
+        throw error
+    })
 }
 
-export const fetchDetailTodos = (id) => dispatch => {
-    // axios.get(`http://www.omdbapi.com/?apikey=faf7e5bb&i=${id}`)
-    // .then(data => {
-    //     dispatch ({
-    //         type: FETCH_DETAIL_TODOS,
-    //         payload: data.data
-    //     })
-    // })
-    // .catch(error => console.log('cek error:', error))
-}
-
-export const addTodo = (item)  => {
-    try {
-        store.dispatch({
-            type: ADD_TODO,
-            payload: item
-        })
-    } catch (error) {
-        console.log('error:', error);
-    }
+export const postTodo = (payload)  => {
+    axios.post('https://gorest.co.in/public/v1/todos', payload, {
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            "Access-Control-Allow-Origin": "*",
+            'Authorization': 'Bearer e08b49a520f19d81eae6015c493fae406755cfc0d9f5bbb064a230551213af0f'
+        }
+    })
+    .then(res => {
+        const dataFiltered = res.data.data.map((item) => ({
+            ...item,
+            description: 'Empty description'
+        }))
+        store.dispatch ({
+            type: POST_TODO,
+            payload: dataFiltered
+        })            
+    })
+    .catch(error => {
+        alert(`Error! ${error.message}`)
+        throw error
+    })
 }
 
 export const doneTodo = (item)  => {
-    try {
-        store.dispatch({
-            type: DONE_TODO,
-            payload: item
-        })
-    } catch (error) {
-        console.log('error:', error);
-    }
+    store.dispatch({
+        type: DONE_TODO,
+        payload: item
+    })
 }
 
 export const undoneTodo = (item)  => {
-    try {
-        store.dispatch({
-            type: UNDONE_TODO,
-            payload: item
-        })
-    } catch (error) {
-        console.log('error:', error);
-    }
+    store.dispatch({
+        type: UNDONE_TODO,
+        payload: item
+    })
 }
 
 export const deleteTodo = (item)  => {
-    try {
-        store.dispatch({
-            type: DELETE_TODO,
-            payload: item
-        })
-    } catch (error) {
-        console.log('error:', error);
-    }
+    store.dispatch({
+        type: DELETE_TODO,
+        payload: item
+    })
 }

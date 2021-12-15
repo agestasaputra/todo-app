@@ -1,28 +1,36 @@
 import React from "react";
 import './styles.scss'
-import { addTodo } from "redux/actions/Todos"
+import { postTodo } from "redux/actions/Todos"
 import { useSelector } from "react-redux"
 
 const Create = () => {
   const store = useSelector(state => state);
   const [form, setForm] = React.useState({
-    name: '',
-    description: '',
-    status: 'todo'
+    id: 0,
+    user_id: 0,
+    title: "",
+    description: "",
+    due_on: new Date(),
+    status: "pending"
   })
 
   function onSubmit(event) {
-    event.preventDefault();
-    const payload = [...store.todo.datas, form]
-    addTodo(payload)
-    onReset();
+    try {
+      event.preventDefault();
+      const payload = [...store.todo.datas, form]
+      postTodo(payload)
+      onReset();
+    } catch (error) {
+      alert(`Error! ${error.message}`)
+      throw error;
+    }
   }
 
   function onReset() {
     setForm({
       name: '',
       description: '',
-      status: 'todo',
+      status: 'pending',
     })
   }
 
@@ -37,10 +45,10 @@ const Create = () => {
               type="text" 
               placeholder="Ex: Learning ReactJS" 
               id="name" 
-              value={form.name}
+              value={form.title || ""}
               onChange={e => setForm({
                 ...form,
-                name: e.target.value
+                title: e.target.value
               })} 
             />
           </div>
@@ -50,7 +58,7 @@ const Create = () => {
               className="textarea" 
               placeholder="Ex: Learning Redux and Learning Axios" 
               id="description" 
-              value={form.description}
+              value={form.description || ""}
               onChange={e => setForm({
                 ...form,
                 description: e.target.value

@@ -1,4 +1,4 @@
-import { FETCH_ALL_TODOS, FETCH_DETAIL_TODOS, ADD_TODO, DONE_TODO, UNDONE_TODO, DELETE_TODO } from '../actions/types'
+import { FETCH_ALL_TODOS, FETCH_DETAIL_TODOS, POST_TODO, DONE_TODO, UNDONE_TODO, DELETE_TODO } from '../actions/types'
 
 const initialState = {
     datas: [],
@@ -16,7 +16,7 @@ const Todos = (state = initialState, action) => {
                 ...state,
                 detail: action.payload,
             }
-        case ADD_TODO:
+        case POST_TODO:
             return {
                 ...state,
                 datas: action.payload,

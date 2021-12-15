@@ -1,20 +1,34 @@
 import React from "react";
 import './styles.scss'
 import { useSelector } from "react-redux";
-import { doneTodo, undoneTodo, deleteTodo } from "redux/actions/Todos"
+import { doneTodo, undoneTodo, deleteTodo, fetchAllTodo } from "redux/actions/Todos"
+import moment from 'moment';
 
 const Landing = () => {
   const store = useSelector(state => state);
 
+  React.useEffect(() => {
+    onFetchAllTodo()
+  }, [])
+
+  function onFetchAllTodo() {
+    try {
+      fetchAllTodo();
+    } catch (error) {
+      alert(`Error - ${error.message}`)
+      throw error;
+    }
+  }
+
   function onUnDone(key) {
     const payload = [...store.todo.datas];
-    payload[key].status = "todo"
+    payload[key].status = "pending"
     undoneTodo(payload)
   }
 
   function onDone(key) {
     const payload = [...store.todo.datas]
-    payload[key].status = "done"
+    payload[key].status = "completed"
     doneTodo(payload)
   }
   
@@ -34,11 +48,11 @@ const Landing = () => {
                 <header className="card-header">
                   <p className="card-header-title">
                     {
-                      data.status === 'done' ? (
-                        <del>{ data.name }</del>
+                      data.status === 'completed' ? (
+                        <del>{ data.title }</del>
                       ) : (
                         <React.Fragment>
-                          { data.name }
+                          { data.title }
                         </React.Fragment>
                       )
                     }
@@ -47,11 +61,15 @@ const Landing = () => {
                 <div className="card-content">
                   <div className="content">
                     {
-                      data.status === 'done' ? (
-                        <del>{ data.description }</del>
+                      data.status === 'completed' ? (
+                        <React.Fragment>
+                          <del> { data.description } </del>
+                          <div> <i>{ moment(data.due_on).format('LL') }</i> </div>
+                        </React.Fragment>
                       ) : (
                         <React.Fragment>
-                          { data.description }
+                          <div> { data.description } </div>
+                          <div> <i>{ moment(data.due_on).format('LL') }</i> </div>                         
                         </React.Fragment>
                       )
                     }
@@ -59,7 +77,7 @@ const Landing = () => {
                 </div>
                 <footer className="card-footer">
                   {
-                    data.status === 'done' ? (
+                    data.status === 'completed' ? (
                       <span className="card-footer-item btn-undone" onClick={() => onUnDone(key)}>Undone</span>
                     ) : (
                       <span className="card-footer-item btn-done" onClick={() => onDone(key)}>Done</span>

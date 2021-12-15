@@ -1,62 +1,35 @@
 import React from "react";
 import './styles.scss'
+import { useSelector } from "react-redux";
+import { doneTodo, undoneTodo, deleteTodo } from "redux/actions/Todos"
 
-const Landing = ({ state, dispatch, location }) => {
-  // const [datas] = React.useState([
-  //   {
-  //     name: 'Learning Vue',
-  //     description: 'Learning Composition API'
-  //   },
-  //   {
-  //     name: 'Learning ReactJS',
-  //     description: 'Learning React Hooks'
-  //   }
-  // ]);
+const Landing = () => {
+  const store = useSelector(state => state);
 
-  console.log('state:', state)
-
-  function onUnDone(data, key) {
-    const tmp = [...state.landing.datas];
-    tmp[key].status = "todo"
-
-    dispatch({
-      type: "landing",
-      data: {
-        datas: tmp
-      }
-    });
+  function onUnDone(key) {
+    const payload = [...store.todo.datas];
+    payload[key].status = "todo"
+    undoneTodo(payload)
   }
 
-  function onDone(data, key) {
-    const tmp = [...state.landing.datas];
-    tmp[key].status = "done"
-
-    dispatch({
-      type: "landing",
-      data: {
-        datas: tmp
-      }
-    });
+  function onDone(key) {
+    const payload = [...store.todo.datas]
+    payload[key].status = "done"
+    doneTodo(payload)
   }
-
-  function onDelete(data, key) {
-    const tmp = [...state.landing.datas];
-    tmp.splice(key, 1);
-    
-    dispatch({
-      type: "landing",
-      data: {
-        datas: tmp
-      }
-    });
+  
+  function onDelete(key) {
+    const payload = [...store.todo.datas];
+    payload.splice(key, 1)
+    deleteTodo(payload)
   }
 
   return (
     <div className="container-landing">
       <span className="desc">
         {
-          state.landing.datas.length > 0 ? (
-            state.landing.datas.map((data, key) => (
+          store.todo.datas.length > 0 ? (
+            store.todo.datas.map((data, key) => (
               <div className="card mb-2" key={key} >
                 <header className="card-header">
                   <p className="card-header-title">
@@ -87,12 +60,12 @@ const Landing = ({ state, dispatch, location }) => {
                 <footer className="card-footer">
                   {
                     data.status === 'done' ? (
-                      <span className="card-footer-item btn-undone" onClick={() => onUnDone(data, key)}>Undone</span>
+                      <span className="card-footer-item btn-undone" onClick={() => onUnDone(key)}>Undone</span>
                     ) : (
-                      <span className="card-footer-item btn-done" onClick={() => onDone(data, key)}>Done</span>
+                      <span className="card-footer-item btn-done" onClick={() => onDone(key)}>Done</span>
                     )
                   }
-                  <span className="card-footer-item btn-delete" onClick={() => onDelete(data, key)}>Delete</span>
+                  <span className="card-footer-item btn-delete" onClick={() => onDelete(key)}>Delete</span>
                 </footer>
               </div>
             ))

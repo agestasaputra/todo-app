@@ -1,8 +1,10 @@
 import React from "react";
 import './styles.scss'
+import { addTodo } from "redux/actions/Todos"
+import { useSelector } from "react-redux"
 
-const Create = ({ state, dispatch }) => {
-
+const Create = () => {
+  const store = useSelector(state => state);
   const [form, setForm] = React.useState({
     name: '',
     description: '',
@@ -11,15 +13,17 @@ const Create = ({ state, dispatch }) => {
 
   function onSubmit(event) {
     event.preventDefault();
-    dispatch({
-      type: "landing",
-      data: {
-        datas: [
-            ...state.landing.datas,
-            form
-        ]
-      }
-    });
+    const payload = [...store.todo.datas, form]
+    addTodo(payload)
+    onReset();
+  }
+
+  function onReset() {
+    setForm({
+      name: '',
+      description: '',
+      status: 'todo',
+    })
   }
 
   return (

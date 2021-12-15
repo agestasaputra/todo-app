@@ -1,20 +1,14 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import Routes from "config/routes";
-import { Context, Provider } from "./context";
-
-function MainContent() {
-  const { state, dispatch } = React.useContext(Context);
-  return (
-    <BrowserRouter>
-      <Routes state={state} dispatch={dispatch} />
-    </BrowserRouter>
-  );
-}
+import { Provider } from 'react-redux'
+import store from './redux/store'
 
 const App = () => (
-  <Provider>
-    <MainContent />
+  <Provider store={store} >    
+     <BrowserRouter>
+       <Routes />
+     </BrowserRouter>
   </Provider>
 );
 export default App;

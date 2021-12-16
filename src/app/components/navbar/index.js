@@ -8,7 +8,7 @@ const Navbar = ({ state, location }) => {
       <div className="container-navbar">
         <div className="container-navbar__icon-left">
           {
-            location.pathname !== '/' && (
+            (location.pathname !== '/' || location.pathname !== '/todo-app/') && (
               <NavLink to={"/"}>
                 <i className="fa fa-arrow-circle-left" />
               </NavLink>

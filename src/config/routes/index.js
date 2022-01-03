@@ -17,6 +17,7 @@ const Routes = ({ state, dispatch }) => {
           )}
         />
         <Route
+          exact
           path="/"
           component={(props) => (
             <Landing {...props} state={state} dispatch={dispatch} />

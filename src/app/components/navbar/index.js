@@ -3,12 +3,13 @@ import './index.scss'
 import { NavLink } from "react-router-dom";
 
 const Navbar = ({ state, location }) => {
+  console.log('location:', location);
   return (
     <nav>
       <div className="container-navbar">
         <div className="container-navbar__icon-left">
           {
-            (location.pathname !== '/' || location.pathname !== '/todo-app/') && (
+            !(location.pathname === '/' || location.pathname === '/todo-app/') && (
               <NavLink to={"/"}>
                 <i className="fa fa-arrow-circle-left" />
               </NavLink>

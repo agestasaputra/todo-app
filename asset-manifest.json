@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/todo-app/static/css/main.ad6732b2.chunk.css",
+    "main.css": "/todo-app/static/css/main.cb87d59b.chunk.css",
     "main.js": "/todo-app/static/js/main.22ef3ae5.chunk.js",
     "main.js.map": "/todo-app/static/js/main.22ef3ae5.chunk.js.map",
     "runtime-main.js": "/todo-app/static/js/runtime-main.6a50f2a5.js",
@@ -10,7 +10,7 @@
     "static/js/2.8d93be94.chunk.js.map": "/todo-app/static/js/2.8d93be94.chunk.js.map",
     "index.html": "/todo-app/index.html",
     "static/css/2.6431961d.chunk.css.map": "/todo-app/static/css/2.6431961d.chunk.css.map",
-    "static/css/main.ad6732b2.chunk.css.map": "/todo-app/static/css/main.ad6732b2.chunk.css.map",
+    "static/css/main.cb87d59b.chunk.css.map": "/todo-app/static/css/main.cb87d59b.chunk.css.map",
     "static/js/2.8d93be94.chunk.js.LICENSE.txt": "/todo-app/static/js/2.8d93be94.chunk.js.LICENSE.txt",
     "static/media/font-awesome.min.css": "/todo-app/static/media/fontawesome-webfont.f691f37e.woff"
   },
@@ -18,7 +18,7 @@
     "static/js/runtime-main.6a50f2a5.js",
     "static/css/2.6431961d.chunk.css",
     "static/js/2.8d93be94.chunk.js",
-    "static/css/main.ad6732b2.chunk.css",
+    "static/css/main.cb87d59b.chunk.css",
     "static/js/main.22ef3ae5.chunk.js"
   ]
 }
